@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open in Browser Button</title>
+  <style>
+    #open-in-browser {
+      display: none;
+    }
+  </style>
+  <script>
+    function openInBrowser() {
+      var currentURL = window.location.href;
+
+      // Check if the device is running on iOS
+      var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+      // Check if the device is running on Android
+      var isAndroid = /Android/.test(navigator.userAgent);
+
+      if (iOS) {
+        // Open the current URL in Safari on iOS
+        window.location.href = "safari://" + currentURL;
+      } else if (isAndroid) {
+        // Open the current URL in the default browser on Android
+        window.location.href = "intent://" + currentURL + "#Intent;package=com.android.chrome;scheme=http;end";
+      } else {
+        // Show a message if the device is not iOS or Android
+        alert("This feature is not supported on your device.");
+      }
+    }
+
+    // Show the "Open in Browser" button after the page has finished loading
+    window.addEventListener("load", function() {
+      var openInBrowserButton = document.getElementById("open-in-browser");
+      openInBrowserButton.style.display = "block";
+    });
+  </script>
+</head>
+<body>
+  <button id="open-in-browser" onclick="openInBrowser()">Open in Browser</button>
+</body>
+</html>
