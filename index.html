@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Open in Browser Button</title>
-  <style>
-    #btn{
-      color:red;
-      height:30%;
-      width:70%;
-  </style>
- <button id='btn' onclick="redirectToBrowser()">Allow</button>
-
-<script>
-  function redirectToBrowser() {
-    // Get the current URL from the Facebook app
-    var currentURL = window.location.href;
-    
-    // Redirect the user to the current URL in the phone's browser
-    window.open(currentURL, '_blank');
-  }
-</script>
-
-</head>
-<body>
-  <button id="open-in-browser" onclick="openInBrowser()">Open in Browser</button>
+  <script>
+// Inject JavaScript code to add a button in the Facebook in-app browser
+javascript:(function() {
+  var openInBrowserButton = document.createElement('button');
+  openInBrowserButton.innerHTML = 'Open in System Browser';
+  openInBrowserButton.onclick = function() {
+    // Redirect to the same URL in the system browser
+    window.open(window.location.href, '_system');
+  };
+  
+  var closeButton = document.querySelector('[aria-label="Close"]');
+  var parentElement = closeButton.parentElement;
+  parentElement.insertBefore(openInBrowserButton, closeButton);
+})();
+  </script>
 </body>
 </html>
